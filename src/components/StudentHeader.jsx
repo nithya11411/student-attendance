@@ -22,7 +22,7 @@ const StudentHeader = () => {
                     Absent: <span className="h-span">{students.length - presentCount}</span>
                 </div>
                 <div className={`hitem col4 ${theme}`}>
-                    Attendance in percent: <span className="h-span">{students.length > 0 ? (((students.length - presentCount )/ (students.length)) * 100).toFixed(2) : 0}%</span>
+                    Attendance in percent: <span className="h-span">{students.length > 0 ? ((presentCount/ (students.length)) * 100).toFixed(2) : 0}%</span>
                 </div>
                 <>
                 <div className={`literal ${theme}`}>
