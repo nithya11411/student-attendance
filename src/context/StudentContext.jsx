@@ -8,10 +8,6 @@ export const StudentProvider = ({children}) => {
         return savedStudents ? JSON.parse(savedStudents.toString()) : [];
     })
 
-    useEffect(() => {
-        console.log("students----", students, students)
-    }, [students])
-
     const addStudent = (name, present) => {
         const newStudent = {
             id: Date.now(),

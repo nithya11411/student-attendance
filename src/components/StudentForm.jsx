@@ -3,7 +3,7 @@ import { StudentContext } from "../context/StudentContext";
 import { ThemeContext } from "../context/ThemeContext";
 
 const StudentForm = ({isEdit, id, name, present}) => {
-    console.log("00000",isEdit, id, name, present)
+
     const [studentDetail, setStudentDetail] = useState({
         studentName: name || '',
         present: present || false
@@ -13,18 +13,16 @@ const StudentForm = ({isEdit, id, name, present}) => {
 
     const handleChange = (e) => {
         const {name, type, checked, value} = e.target;
-        console.log(type, checked)
         setStudentDetail({
             ...studentDetail,
             [name] : type === "checkbox" ? checked : value
         })
     }
 
-    console.log("studentDetail",studentDetail)
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(!studentDetail.studentName.trim) {
+        if(studentDetail.studentName.trim() === '') {
+            alert("Student Name Should not empty");
             return;
         }
         if (isEdit) {

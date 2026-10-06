@@ -17,19 +17,16 @@ const StudentList = () => {
     const [search, setSearch] = useState('');
     const [filterPresent, setFilterPresent] = useState(StudentStatus.ALL)
     const [filteredStudents, setFilteredStudents] = useState(students);
-    const [isEdit, setIsEdit] = useState(false);
+    const [editStudentDetail, setEditStudentDetail] = useState(null);
 
     const handleStatusChange = (event) => {
-        const {name, type, value, checked} = event.target; //destructing
-        console.log("value",value)
-        setFilterPresent(value)
-        console.log(filterPresent)
-
+        const {value} = event.target; //destructing
+        setFilterPresent(value);
     }
 
-    const handleEdit = (id) => {
-        setIsEdit(true);
-        editStudent(id)
+    const handleEdit = (student) => {
+        setEditStudentDetail(student);
+        editStudent(student.id);
     }
 
     useEffect(() => {
@@ -41,8 +38,6 @@ const StudentList = () => {
             setFilteredStudents(students?.filter((student) => student?.name?.toLowerCase().includes(search.toLowerCase())));
         }
     }, [search, filterPresent, students])
-
-    console.log("isEdit", isEdit)
 
     return (
         <div className="list-card" style={{marginTop: '50px'}}>
@@ -75,24 +70,23 @@ const StudentList = () => {
                             <button className="btn-mark" onClick={() => markAttendance(student.id)}>
                                 {student.present ? "Mark Absent" : "Mark Present"}
                             </button>
-                            <button className="btn-edit" onClick={() => handleEdit(student.id)}>
+                            <button className="btn-edit" onClick={() => handleEdit(student)}>
                                 Edit
                             </button>
                             <button className="btn-delete" onClick={() => deleteStudent(student.id)}>
                                 Delete
                             </button>
                          </div>
-                         {isEdit ? <PopupModal 
-                            isOpen={isEdit} 
-                            onClose={() => setIsEdit(false)} 
-                            title={`Edit Student - ${student.name}`}
-                        > 
-                            <StudentForm isEdit={isEdit} id={student.id} name={student.name}
-                                present={student.present}/>
-                        </PopupModal> : null}
                     </>
                 ))
                 }
+                {editStudentDetail && <PopupModal 
+                            isOpen={true} 
+                            onClose={() => setEditStudentDetail(null)} 
+                            title={`Edit Student - ${editStudentDetail.name}`}
+                        > 
+                            <StudentForm isEdit={true} {...editStudentDetail}/>
+                        </PopupModal>}
                 </div>
             {/* {show && <Alert show={show} message={"Are you sure you want to delete ?"} buttonText={"Delete"}/>} */}
         </div>
