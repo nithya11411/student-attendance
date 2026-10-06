@@ -2,13 +2,13 @@ import { useContext, useState } from "react"
 import { StudentContext } from "../context/StudentContext";
 import { ThemeContext } from "../context/ThemeContext";
 
-const StudentForm = ({isEdit, id, name, present}) => {
+const StudentForm = ({isEdit, onEditClose, id, name, present}) => {
 
     const [studentDetail, setStudentDetail] = useState({
         studentName: name || '',
         present: present || false
     });
-    const {addStudent} = useContext(StudentContext);
+    const {addStudent, editStudent} = useContext(StudentContext);
     const {theme} = useContext(ThemeContext); 
 
     const handleChange = (e) => {
@@ -27,6 +27,7 @@ const StudentForm = ({isEdit, id, name, present}) => {
         }
         if (isEdit) {
             editStudent(studentDetail.studentName, studentDetail.present, id);
+            onEditClose(null); //close popup
         } else {
             addStudent(studentDetail.studentName, studentDetail.present);
         }

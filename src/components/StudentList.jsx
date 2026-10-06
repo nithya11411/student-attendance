@@ -12,7 +12,7 @@ const StudentStatus = {
 }
 
 const StudentList = () => {
-    const {students, markAttendance, editStudent, deleteStudent} = useContext(StudentContext);
+    const {students, markAttendance, deleteStudent} = useContext(StudentContext);
     const {theme} = useContext(ThemeContext); 
     const [search, setSearch] = useState('');
     const [filterPresent, setFilterPresent] = useState(StudentStatus.ALL)
@@ -26,7 +26,6 @@ const StudentList = () => {
 
     const handleEdit = (student) => {
         setEditStudentDetail(student);
-        editStudent(student.id);
     }
 
     useEffect(() => {
@@ -85,7 +84,7 @@ const StudentList = () => {
                             onClose={() => setEditStudentDetail(null)} 
                             title={`Edit Student - ${editStudentDetail.name}`}
                         > 
-                            <StudentForm isEdit={true} {...editStudentDetail}/>
+                            <StudentForm isEdit={true} onEditClose={setEditStudentDetail} {...editStudentDetail}/>
                         </PopupModal>}
                 </div>
             {/* {show && <Alert show={show} message={"Are you sure you want to delete ?"} buttonText={"Delete"}/>} */}
